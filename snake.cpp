@@ -1,9 +1,14 @@
 #include <iostream>
-
 #include <SDL.h>
 
-int main(void) {
-  std::cout << "Hello Snake" << std::endl;
-  
-  return 0;
+#include "snake.h"
+#include "window.h"  // Include only the header, not the cpp
+
+int main(void) 
+{
+    std::cout << "Hello Snake" << std::endl;
+    
+    Window win;
+
+    return win.openWindow();
 }
