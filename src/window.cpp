@@ -50,6 +50,7 @@ void proccessKey(SDL_KeyboardEvent *m_key)
     }
     std::cout << "}" << std::endl;
     */
+
 }
 
 int openWindow()
