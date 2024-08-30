@@ -1,12 +1,11 @@
 #include "window.h"
+#include "snake.h"
 
-// Define static members of the Window class
-bool Window::quit = false;
+SDL_Window *win = nullptr;
+SDL_Surface *surface = nullptr;
+bool quit = false;
 
-SDL_Window *Window::win = nullptr;
-SDL_Surface *Window::surface = nullptr;
-
-Window::Window()
+void init()
 {
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -15,7 +14,7 @@ Window::Window()
     }
 
     // Create window
-    win = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+    win = SDL_CreateWindow("Snake Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 
     if (win == NULL)
     {
@@ -26,7 +25,7 @@ Window::Window()
     surface = SDL_GetWindowSurface(win);
 }
 
-void Window::proccessKey(SDL_KeyboardEvent *m_key)
+void proccessKey(SDL_KeyboardEvent *m_key)
 {
     switch (m_key->keysym.sym)
     {
@@ -36,13 +35,14 @@ void Window::proccessKey(SDL_KeyboardEvent *m_key)
     }
 }
 
-int Window::openWindow()
+int openWindow()
 {
     SDL_Event e;
 
     SDL_UpdateWindowSurface(win);
 
-    paintYellow(); // Correct usage, since it's a member function of Window class
+    initializeBlocks();
+    paintBlocks();
 
     while (!quit)
     {
@@ -70,7 +70,9 @@ int Window::openWindow()
     return 0;
 }
 
-void Window::putPixel(int x, int y, Uint32 pixel)
+// Painting functions
+
+void putPixel(int x, int y, Uint32 pixel)
 {
     int bpp = surface->format->BytesPerPixel;
     Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
@@ -106,22 +108,21 @@ void Window::putPixel(int x, int y, Uint32 pixel)
     }
 }
 
-void Window::paintYellow()
+void paintYellowSquare(int x, int y)
 {
-    int x, y;
+    x *= WINDOW_WIDTH / WIN_DIV;
+    y *= WINDOW_HEIGHT / WIN_DIV;
+
     Uint32 yellow;
 
     yellow = SDL_MapRGB(surface->format, 0xff, 0xff, 0x00);
 
-    x = 400;
-    y = 200;
-    
     SDL_Rect rect;
 
-    rect.x = 0;
-    rect.y = 0;
-    rect.h = 600;
-    rect.w = 400;
+    rect.x = x;
+    rect.y = y;
+    rect.h = y + WINDOW_HEIGHT / WIN_DIV;
+    rect.w = x + WINDOW_WIDTH / WIN_DIV;
 
     if (SDL_MUSTLOCK(surface))
     {
@@ -132,7 +133,13 @@ void Window::paintYellow()
         }
     }
 
-    putPixel(x, y, yellow);
+    for (int j = 0; j < WINDOW_WIDTH / WIN_DIV; ++j)
+    {
+        for (int h = 0; h < WINDOW_HEIGHT / WIN_DIV; ++h)
+        {
+            putPixel(x + j, y + h, yellow);
+        }
+    }
 
     if (SDL_MUSTLOCK(surface))
     {
