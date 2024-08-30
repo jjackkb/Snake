@@ -2,13 +2,10 @@
 #define BLOCK_H
 
 struct Block {
-  private:
+  public:
     int x, y;
 
-  public:
     Block(int x, int y);
-
-    void paint();
 };
 
 #endif // BLOCK_H

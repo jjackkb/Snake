@@ -4,10 +4,18 @@
 #include <vector>
 
 #include "block.h"
+#include "window.h"
 
 extern std::vector<Block> blocks;
+extern Block leadBlock;
 
 void initializeBlocks();
 void paintBlocks();
+
+// Movement
+void moveUp();
+void moveDown();
+void moveLeft();
+void moveRight();
 
 #endif //SNAKE_H

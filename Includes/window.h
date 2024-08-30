@@ -17,6 +17,6 @@ int openWindow(void);
 
 void proccessKey(SDL_KeyboardEvent *m_key);
 void putPixel(int x, int y, Uint32 pixel);
-void paintYellowSquare(int x, int y);
+void paintSquare(int x, int y, int color);
 
 #endif // WINDOW_H

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "window.h"
 #include "snake.h"
 
@@ -30,9 +32,18 @@ void proccessKey(SDL_KeyboardEvent *m_key)
     switch (m_key->keysym.sym)
     {
     case SDLK_q:
-        quit = true;
-        break;
+        quit = true; break;
+    case SDLK_w:
+        moveUp(); break;
+    case SDLK_s:
+        moveDown(); break;
+    case SDLK_a:
+        moveLeft(); break;
+    case SDLK_d:
+        moveRight(); break;
     }
+
+    //std::cout << leadBlock.x << "," << leadBlock.y << std::endl;
 }
 
 int openWindow()
@@ -42,7 +53,6 @@ int openWindow()
     SDL_UpdateWindowSurface(win);
 
     initializeBlocks();
-    paintBlocks();
 
     while (!quit)
     {
@@ -57,7 +67,6 @@ int openWindow()
             switch (e.type)
             {
             case SDL_KEYDOWN:
-            case SDL_KEYUP:
                 proccessKey(&e.key);
                 break;
             }
@@ -108,21 +117,24 @@ void putPixel(int x, int y, Uint32 pixel)
     }
 }
 
-void paintYellowSquare(int x, int y)
+void paintSquare(int x, int y, int m_color)
 {
-    x *= WINDOW_WIDTH / WIN_DIV;
-    y *= WINDOW_HEIGHT / WIN_DIV;
+    x *= (WINDOW_WIDTH / WIN_DIV);
+    y *= (WINDOW_HEIGHT / WIN_DIV);
 
-    Uint32 yellow;
+    Uint32 color;
 
-    yellow = SDL_MapRGB(surface->format, 0xff, 0xff, 0x00);
+    switch (m_color) {
+    case 0: color = SDL_MapRGB(surface->format, 0xff, 0xff, 0x00); break;
+    case 1: color = SDL_MapRGB(surface->format, 0x00, 0x00, 0x00); break;
+    }
 
     SDL_Rect rect;
 
     rect.x = x;
     rect.y = y;
-    rect.h = y + WINDOW_HEIGHT / WIN_DIV;
-    rect.w = x + WINDOW_WIDTH / WIN_DIV;
+    rect.h = y + (WINDOW_HEIGHT / WIN_DIV);
+    rect.w = x + (WINDOW_WIDTH / WIN_DIV);
 
     if (SDL_MUSTLOCK(surface))
     {
@@ -137,7 +149,7 @@ void paintYellowSquare(int x, int y)
     {
         for (int h = 0; h < WINDOW_HEIGHT / WIN_DIV; ++h)
         {
-            putPixel(x + j, y + h, yellow);
+            putPixel(x + j, y + h, color);
         }
     }
 
