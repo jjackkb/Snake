@@ -11,6 +11,7 @@ extern Block leadBlock;
 
 void initializeBlocks();
 void paintBlocks();
+void updateBlocks();
 
 // Movement
 void moveUp();

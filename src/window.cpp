@@ -43,7 +43,13 @@ void proccessKey(SDL_KeyboardEvent *m_key)
         moveRight(); break;
     }
 
-    //std::cout << leadBlock.x << "," << leadBlock.y << std::endl;
+    /* Pos output
+    std::cout << "{" << std::endl;
+    for (Block b : blocks) {
+        std::cout << b.x << "," << b.y << std::endl;
+    }
+    std::cout << "}" << std::endl;
+    */
 }
 
 int openWindow()
