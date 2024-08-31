@@ -14,6 +14,8 @@ void paintBlocks();
 void updateBlocks();
 void checkDeath();
 void die();
+void placeFruit();
+int checkFruitPos(int x, int y);
 
 // Movement
 void moveUp();
@@ -21,4 +23,4 @@ void moveDown();
 void moveLeft();
 void moveRight();
 
-#endif //SNAKE_H
+#endif // SNAKE_H

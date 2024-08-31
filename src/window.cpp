@@ -32,15 +32,20 @@ void proccessKey(SDL_KeyboardEvent *m_key)
     switch (m_key->keysym.sym)
     {
     case SDLK_q:
-        quit = true; break;
+        quit = true;
+        break;
     case SDLK_w:
-        moveUp(); break;
+        moveUp();
+        break;
     case SDLK_s:
-        moveDown(); break;
+        moveDown();
+        break;
     case SDLK_a:
-        moveLeft(); break;
+        moveLeft();
+        break;
     case SDLK_d:
-        moveRight(); break;
+        moveRight();
+        break;
     }
 
     /* Pos output
@@ -50,7 +55,6 @@ void proccessKey(SDL_KeyboardEvent *m_key)
     }
     std::cout << "}" << std::endl;
     */
-
 }
 
 int openWindow()
@@ -131,9 +135,17 @@ void paintSquare(int x, int y, int m_color)
 
     Uint32 color;
 
-    switch (m_color) {
-    case 0: color = SDL_MapRGB(surface->format, 0xff, 0xff, 0x00); break;
-    case 1: color = SDL_MapRGB(surface->format, 0x00, 0x00, 0x00); break;
+    switch (m_color)
+    {
+    case 0:
+        color = SDL_MapRGB(surface->format, 0xff, 0xff, 0x00);
+        break;
+    case 1:
+        color = SDL_MapRGB(surface->format, 0x00, 0x00, 0x00);
+        break;
+    case 2:
+        color = SDL_MapRGB(surface->format, 0xff, 0x00, 0x00);
+        break;
     }
 
     SDL_Rect rect;
