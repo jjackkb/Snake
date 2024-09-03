@@ -2,13 +2,14 @@
 #include <SDL.h>
 
 #include "main.h"
-#include "window.h"  // Include only the header, not the cpp
+#include "window.h" 
+#include "model-snake.h"
 
 int main(void) 
 {
-    std::cout << "Hello main" << std::endl;
     
     init();
+    initializeBlocks();
 
     return openWindow();
 }

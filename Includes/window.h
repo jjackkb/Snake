@@ -13,7 +13,8 @@ extern SDL_Surface *surface;
 extern bool quit;
 
 void init();
-int openWindow(void);
+int openWindow();
+void clearWindow();
 
 void proccessKey(SDL_KeyboardEvent *m_key);
 void putPixel(int x, int y, Uint32 pixel);

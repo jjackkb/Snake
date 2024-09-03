@@ -1,7 +1,8 @@
 #include <iostream>
 
 #include "window.h"
-#include "snake.h"
+#include "ctrl-snake.h"
+#include "model-snake.h"
 
 SDL_Window *win = nullptr;
 SDL_Surface *surface = nullptr;
@@ -63,8 +64,6 @@ int openWindow()
 
     SDL_UpdateWindowSurface(win);
 
-    initializeBlocks();
-
     while (!quit)
     {
         while (SDL_PollEvent(&e))
@@ -88,6 +87,14 @@ int openWindow()
     SDL_Quit();
 
     return 0;
+}
+
+void clearWindow() {
+    for (int x = 0; x < WIN_DIV; x++) {
+        for (int y = 0; y < WIN_DIV; y++) {
+            paintSquare(x,y,1);
+        }
+    }
 }
 
 // Painting functions

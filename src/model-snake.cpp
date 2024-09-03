@@ -1,7 +1,7 @@
 #include <iostream>
 #include <random>
 
-#include "snake.h"
+#include "model-snake.h"
 
 std::random_device dev;
 std::mt19937 rng(dev());
@@ -12,6 +12,8 @@ Block leadBlock = Block(2, 0);
 
 int fruit_x;
 int fruit_y;
+
+int count = 0;
 
 void initializeBlocks()
 {
@@ -32,26 +34,17 @@ void paintBlocks()
   }
 }
 
-void updateBlocks()
+void checkPos() 
 {
-  paintSquare(blocks.back().x, blocks.back().y, 1);
-
-  for (int i = blocks.size() - 1; i > 0; i--)
-  {
-    blocks[i].x = blocks[i - 1].x;
-    blocks[i].y = blocks[i - 1].y;
-  }
-
   if (blocks[0].x == fruit_x && blocks[0].y == fruit_y)
   {
+    std::cout << ++count << std::endl;
     blocks.push_back(Block(blocks.back().x, blocks.back().y));
     placeFruit();
     paintBlocks();
+    return;
   }
-}
 
-void checkDeath()
-{
   for (int i = 1; i < blocks.size(); i++)
   { // Check for self collision
     if (blocks[0].x == blocks[i].x && blocks[0].y == blocks[i].y)
@@ -61,12 +54,25 @@ void checkDeath()
   }
 }
 
+void updateBlocks()
+{
+  paintSquare(blocks.back().x, blocks.back().y, 1);
+
+  for (int i = blocks.size() - 1; i > 0; i--)
+  {
+    blocks[i].x = blocks[i - 1].x;
+    blocks[i].y = blocks[i - 1].y;
+  }
+}
+
 void die()
 {
-  for (Block b : blocks)
-    paintSquare(b.x, b.y, 1);
-
+  clearWindow();
   blocks.clear();
+
+  fruit_x = -1;
+  fruit_y = -1;
+
   initializeBlocks();
 }
 
@@ -98,66 +104,4 @@ int checkFruitPos(int x, int y)
   }
 
   return 1;
-}
-
-// Movement
-
-void moveUp()
-{
-  if (blocks[0].y - 1 >= 0)
-  {
-    updateBlocks();
-    blocks[0].y -= 1;
-    checkDeath();
-    paintBlocks();
-  }
-  else
-  {
-    die();
-  }
-}
-
-void moveDown()
-{
-  if (blocks[0].y + 1 < WIN_DIV)
-  {
-    updateBlocks();
-    blocks[0].y += 1;
-    checkDeath();
-    paintBlocks();
-  }
-  else
-  {
-    die();
-  }
-}
-
-void moveLeft()
-{
-  if (blocks[0].x - 1 >= 0)
-  {
-    updateBlocks();
-    blocks[0].x -= 1;
-    checkDeath();
-    paintBlocks();
-  }
-  else
-  {
-    die();
-  }
-}
-
-void moveRight()
-{
-  if (blocks[0].x + 1 < WIN_DIV)
-  {
-    updateBlocks();
-    blocks[0].x += 1;
-    checkDeath();
-    paintBlocks();
-  }
-  else
-  {
-    die();
-  }
 }

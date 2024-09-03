@@ -1,5 +1,5 @@
-#ifndef SNAKE_H
-#define SNAKE_H
+#ifndef MODEL_SNAKE_H
+#define MODEL_SNAKE_H
 
 #include <vector>
 
@@ -11,16 +11,10 @@ extern Block leadBlock;
 
 void initializeBlocks();
 void paintBlocks();
+void checkPos();
 void updateBlocks();
-void checkDeath();
 void die();
 void placeFruit();
 int checkFruitPos(int x, int y);
 
-// Movement
-void moveUp();
-void moveDown();
-void moveLeft();
-void moveRight();
-
-#endif // SNAKE_H
+#endif //MODEL_SNAKE_H
